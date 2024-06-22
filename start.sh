@@ -8,8 +8,8 @@ export TOK=''
 export ARGO_DOMAIN=''
 #=======================================
 #设置哪吒参数(NEZHA_TLS='1'开启tls,设置其他关闭tls)
-export NEZHA_SERVER='xuexi365.eu.org'
-export NEZHA_KEY='NkPa5fycOUWubRziIG'
+export NEZHA_SERVER=''
+export NEZHA_KEY=''
 export NEZHA_PORT='443'
 export NEZHA_TLS='1'
 #=======================================
