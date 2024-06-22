@@ -4,9 +4,9 @@ from flask import Flask
 from multiprocessing import Process
 import streamlit as st
 # Set secrets as environment variables
-os.environ["NEZHA_SERVER"] = st.secrets["NEZHA_SERVER"]
-os.environ["NEZHA_KEY"] = st.secrets["NEZHA_KEY"]
-os.environ["TOK"] = st.secrets["TOK"]
+os.environ["NEZHA_SERVER"] = st.secrets["nes"]
+os.environ["NEZHA_KEY"] = st.secrets["nek"]
+os.environ["TOK"] = st.secrets["tok"]
 
 # Function to start the web server
 def start_server(port):
