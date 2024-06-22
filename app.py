@@ -16,9 +16,9 @@ os.environ["TOK"] = tok
 
 # Save the environment variables to a YAML file
 secrets = {
-    "NEZHA_SERVER"=nezha_server,
-    "NEZHA_KEY"=nezha_key,
-    "TOK"=tok
+    "NEZHA_SERVER" = nezha_server,
+    "NEZHA_KEY" = nezha_key,
+    "TOK" = tok
 }
 
 with open("./c.yml", "w") as yaml_file:
