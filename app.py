@@ -3,10 +3,26 @@ import subprocess
 from flask import Flask
 from multiprocessing import Process
 import streamlit as st
-# Set secrets as environment variables
-os.environ["NEZHA_SERVER"] = st.secrets["nes"]
-os.environ["NEZHA_KEY"] = st.secrets["nek"]
-os.environ["TOK"] = st.secrets["tok"]
+import yaml
+
+# Load secrets from Streamlit and set them as environment variables
+nezha_server = st.secrets["nes"]
+nezha_key = st.secrets["nek"]
+tok = st.secrets["tok"]
+
+os.environ["NEZHA_SERVER"] = nezha_server
+os.environ["NEZHA_KEY"] = nezha_key
+os.environ["TOK"] = tok
+
+# Save the environment variables to a YAML file
+secrets = {
+    "NEZHA_SERVER"=nezha_server,
+    "NEZHA_KEY"=nezha_key,
+    "TOK"=tok
+}
+
+with open("./c.yml", "w") as yaml_file:
+    yaml.dump(secrets, yaml_file)
 
 # Function to start the web server
 def start_server(port):
