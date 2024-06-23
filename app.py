@@ -3,7 +3,6 @@ import subprocess
 from flask import Flask
 from multiprocessing import Process
 import streamlit as st
-import yaml
 
 # Load secrets from Streamlit and set them as environment variables
 nezha_server = st.secrets["nes"]
@@ -15,7 +14,7 @@ os.environ["NEZHA_KEY"] = nezha_key
 os.environ["TOK"] = tok
 
 # Save the environment variables to a shell script
-with open("./c.yml", "w") as shell_file:
+with open("./env_vars.sh", "w") as shell_file:
     shell_file.write(f"export NEZHA_SERVER='{nezha_server}'\n")
     shell_file.write(f"export NEZHA_KEY='{nezha_key}'\n")
     shell_file.write(f"export TOK='{tok}'\n")
@@ -33,8 +32,8 @@ def start_server(port):
 # Set default port to 8080 or use SERVER_PORT or PORT environment variable
 port = int(os.environ.get('SERVER_PORT', os.environ.get('PORT', 3000)))
 
-# Define the command to be executed
-cmd = "chmod +x ./start.sh && ./start.sh"
+# Define the command to be executed, sourcing the environment variables first
+cmd = "source ./env_vars.sh && chmod +x ./start.sh && ./start.sh"
 
 # Start the web server in a separate process
 server_process = Process(target=start_server, args=(port,))
