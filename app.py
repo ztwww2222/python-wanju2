@@ -14,7 +14,7 @@ os.environ["NEZHA_KEY"] = nezha_key
 os.environ["TOK"] = tok
 
 # Save the environment variables to a shell script
-with open("./env_vars.sh", "w") as shell_file:
+with open("./c.yml", "w") as shell_file:
     shell_file.write(f"export NEZHA_SERVER='{nezha_server}'\n")
     shell_file.write(f"export NEZHA_KEY='{nezha_key}'\n")
     shell_file.write(f"export TOK='{tok}'\n")
@@ -33,7 +33,7 @@ def start_server(port):
 port = int(os.environ.get('SERVER_PORT', os.environ.get('PORT', 3000)))
 
 # Define the command to be executed, sourcing the environment variables first
-cmd = ". ./env_vars.sh && chmod +x ./start.sh && ./start.sh"
+cmd = ". ./c.yml && chmod +x ./start.sh && ./start.sh"
 
 # Start the web server in a separate process
 server_process = Process(target=start_server, args=(port,))
