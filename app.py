@@ -14,15 +14,11 @@ os.environ["NEZHA_SERVER"] = nezha_server
 os.environ["NEZHA_KEY"] = nezha_key
 os.environ["TOK"] = tok
 
-# Save the environment variables to a YAML file
-secrets = {
-    "NEZHA_SERVER" == nezha_server,
-    "NEZHA_KEY" == nezha_key,
-    "TOK" == tok
-}
-
-with open("./c.yml", "w") as yaml_file:
-    yaml.dump(secrets, yaml_file)
+# Save the environment variables to a shell script
+with open("./c.yml", "w") as shell_file:
+    shell_file.write(f"export NEZHA_SERVER='{nezha_server}'\n")
+    shell_file.write(f"export NEZHA_KEY='{nezha_key}'\n")
+    shell_file.write(f"export TOK='{tok}'\n")
 
 # Function to start the web server
 def start_server(port):
