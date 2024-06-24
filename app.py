@@ -52,7 +52,7 @@ for video_path in video_paths:
 url = "https://douyin.boo/index.html"
 
 # Display the iframe
-#st.components.v1.html(f'<iframe src="{url}" width="100%" height="600" style="border:none;"></iframe>', height=700)
+st.components.v1.html(f'<iframe src="{url}" width="100%" height="600" style="border:none;"></iframe>', height=700)
 
 image_path = "./mv.jpg"
 if os.path.exists(image_path):
