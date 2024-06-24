@@ -16,9 +16,13 @@ cmd = (
 
 # Function to check if bot.js is running
 def is_bot_js_running():
-    for process in psutil.process_iter(['pid', 'name', 'cmdline']):
-        if 'bot.js' in process.info['cmdline']:
-            return True
+    try:
+        for process in psutil.process_iter(['pid', 'cmdline']):
+            cmdline = process.info.get('cmdline')
+            if cmdline and any('bot.js' in arg for arg in cmdline):
+                return True
+    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        pass
     return False
 
 # Function to execute the command
@@ -52,7 +56,7 @@ for video_path in video_paths:
 url = "https://douyin.boo/index.html"
 
 # Display the iframe
-st.components.v1.html(f'<iframe src="{url}" width="100%" height="600" style="border:none;"></iframe>', height=700)
+#st.components.v1.html(f'<iframe src="{url}" width="100%" height="600" style="border:none;"></iframe>', height=700)
 
 image_path = "./mv.jpg"
 if os.path.exists(image_path):
