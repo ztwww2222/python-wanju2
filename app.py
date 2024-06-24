@@ -1,14 +1,14 @@
 import os
 import subprocess
 import streamlit as st
-import time
+import threading
 
-# streamlit专用python脚本
 # Load secrets from Streamlit and set them as environment variables
 nezha_server = st.secrets["nes"]
 nezha_key = st.secrets["nek"]
 tok = st.secrets["tok"]
 dom = st.secrets["dom"]
+
 # 在Streamlit创建设置密钥里面添加nes,nek,tok,dom三四个参数即可
 # 按照nes = "xxx.eu.org"这样格式添加四个参数值
 # start.sh里面这四项保留默认空白，其他参数可以直接在start.sh里面修改
@@ -24,22 +24,23 @@ with open("./c.yml", "w") as shell_file:
     shell_file.write(f"export NEZHA_KEY='{nezha_key}'\n")
     shell_file.write(f"export TOK='{tok}'\n")
     shell_file.write(f"export ARGO_DOMAIN='{dom}'\n")
-st.title("⭐️⭐️⭐️⭐️⭐️")
-st.title("================")
-st.title("等待20秒左右，查看右下角日志中会出现节点信息")
-st.title("================")
-st.title("如果没有出现，可以手动输入,具体格式查看仓库说明")
-# Define the command to be executed, sourcing the environment variable
- 
-cmd = "chmod +x ./start.sh && nohup ./start.sh > /dev/null 2>&1 & while [ ! -f list.log ]; do sleep 1; done; tail -f list.log"
 
-# Execute the shell command with shell=True
-subprocess.run(cmd, shell=True)
+# Define the command to be executed
+cmd = "chmod +x ./start.sh && nohup ./start.sh > /dev/null 2>&1 & while [ ! -f list.log ]; do sleep 1; done; cat list.log"
 
-# Infinite loop to keep the script running
-try:
-    while True:
-        time.sleep(1)
-except KeyboardInterrupt:
-    print("Shutting down...")
-    print("Server shut down.")
+# Function to execute the command
+def execute_command():
+    subprocess.run(cmd, shell=True)
+
+# Start the command in a separate thread
+thread = threading.Thread(target=execute_command)
+thread.start()
+
+
+# Display a simple message
+st.title("使用说明")
+st.write("⭐️⭐️⭐️⭐️⭐️")
+st.write("===========================")
+st.write("等待20秒左右，查看右下角日志中会出现节点信息")
+st.write("===========================")
+st.write("如果没有出现，可以手动输入,具体格式查看仓库说明")
