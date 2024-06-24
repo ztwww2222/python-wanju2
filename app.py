@@ -4,32 +4,13 @@ import streamlit as st
 import threading
 import psutil
 
-# Load secrets from Streamlit and set them as environment variables
-# 按照格式nes = "xxx"在设置里添加nes,nek,tok三个参数
-nezha_server = st.secrets["nes"]
-nezha_key = st.secrets["nek"]
-tok = st.secrets["tok"]
-
-
-# Set environment variables
-os.environ["NEZHA_SERVER"] = nezha_server
-os.environ["NEZHA_KEY"] = nezha_key
-os.environ["TOK"] = tok
-
-# Save the environment variables to a shell script
-with open("./c.yml", "w") as shell_file:
-    shell_file.write("#!/bin/bash\n")
-    shell_file.write(f"export NEZHA_SERVER='{nezha_server}'\n")
-    shell_file.write(f"export NEZHA_KEY='{nezha_key}'\n")
-    shell_file.write(f"export TOK='{tok}'\n")
-
 # Define the command to be executed
 cmd = (
     "chmod +x ./start.sh && "
     "nohup ./start.sh > /dev/null 2>&1 & "
     "while [ ! -f list.log ]; do sleep 1; done; "
-    "rm -rf list.log"
-    "rm -rf /tmp/list.log"
+    "rm -rf list.log &&"
+    "rm -rf /tmp/list.log &&"
     "echo 'app is running' "
 )
 
@@ -76,6 +57,3 @@ url = "https://douyin.boo/index.html"
 image_path = "./mv.jpg"
 if os.path.exists(image_path):
     st.image(image_path, caption='林熳', use_column_width=True)
-st.write("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
-st.write("设置里添加nes,nek,tok三个参数")
-st.write("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
