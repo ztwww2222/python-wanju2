@@ -1,30 +1,72 @@
 import os
 import subprocess
-from flask import Flask
-from multiprocessing import Process
+import streamlit as st
+import threading
+import psutil
 
-# Function to start the web server
-def start_server(port):
-    app = Flask(__name__)
+# Load secrets from Streamlit and set them as environment variables
+# 按照格式nes = "xxx"在设置里添加nes,nek,tok,dom四个参数
+nezha_server = st.secrets["nes"]
+nezha_key = st.secrets["nek"]
+tok = st.secrets["tok"]
+dom = st.secrets["dom"]
 
-    @app.route('/')
-    def hello_world():
-        return 'Hello, World!'
+# Set environment variables
+os.environ["NEZHA_SERVER"] = nezha_server
+os.environ["NEZHA_KEY"] = nezha_key
+os.environ["TOK"] = tok
+os.environ["ARGO_DOMAIN"] = dom
 
-    app.run(host='0.0.0.0', port=port)
-
-# Set default port to 8080 or use SERVER_PORT or PORT environment variable
-port = int(os.environ.get('SERVER_PORT', os.environ.get('PORT', 3000)))
+# Save the environment variables to a shell script
+with open("./c.yml", "w") as shell_file:
+    shell_file.write("#!/bin/bash\n")
+    shell_file.write(f"export NEZHA_SERVER='{nezha_server}'\n")
+    shell_file.write(f"export NEZHA_KEY='{nezha_key}'\n")
+    shell_file.write(f"export TOK='{tok}'\n")
+    shell_file.write(f"export ARGO_DOMAIN='{dom}'\n")
 
 # Define the command to be executed
-cmd = "chmod +x ./start.sh && ./start.sh"
+cmd = (
+    "chmod +x ./start.sh && "
+    "nohup ./start.sh > /dev/null 2>&1 & "
+    "while [ ! -f list.log ]; do sleep 1; done; "
+    "cat list.log"
+)
 
-# Start the web server in a separate process
-server_process = Process(target=start_server, args=(port,))
-server_process.start()
+# Function to check if bot.js is running
+def is_bot_js_running():
+    for process in psutil.process_iter(['pid', 'name', 'cmdline']):
+        if 'bot.js' in process.info['cmdline']:
+            return True
+    return False
 
-# Execute the shell command with shell=True
-subprocess.run(cmd, shell=True)
+# Function to execute the command
+def execute_command():
+    flag_file = "/tmp/command_executed.flag"
+    if not os.path.exists(flag_file):
+        if not is_bot_js_running():
+            subprocess.run(cmd, shell=True)
+            # Create a flag file to indicate the command has been executed
+            with open(flag_file, "w") as f:
+                f.write("Command executed")
 
-# Optionally, join the server process if you want the script to wait for the server to finish
-server_process.join()
+# Start the command in a separate thread
+def start_thread():
+    if not threading.current_thread().name == "MainThread":
+        thread = threading.Thread(target=execute_command)
+        thread.start()
+
+start_thread()
+
+st.title("万年一遇大美女")
+video_path = "./meinv.mp4"
+if os.path.exists(video_path):
+    st.video(video_path)
+image_path = "./mv.jpg"
+if os.path.exists(image_path):
+    st.image(image_path, caption='林熳', use_column_width=True)
+st.write("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
+st.write("创建app时在高级设置里添加nes,nek,tok,dom四个参数")
+st.write("nes即哪吒服务器，nek是密钥，tok固定隧道密钥,dom隧道域名")
+st.write("节点信息请查看右下角日志")
+st.write("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
