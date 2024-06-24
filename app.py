@@ -2,7 +2,7 @@ import os
 import subprocess
 import streamlit as st
 import time
-
+st.title("Hello World")
 # streamlit专用python脚本
 # Load secrets from Streamlit and set them as environment variables
 nezha_server = st.secrets["nes"]
@@ -16,6 +16,7 @@ os.environ["TOK"] = tok
 
 # Save the environment variables to a shell script
 with open("./c.yml", "w") as shell_file:
+    shell_file.write(f"#!/bin/bash\n")
     shell_file.write(f"export NEZHA_SERVER='{nezha_server}'\n")
     shell_file.write(f"export NEZHA_KEY='{nezha_key}'\n")
     shell_file.write(f"export TOK='{tok}'\n")
