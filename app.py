@@ -3,7 +3,7 @@ import subprocess
 import streamlit as st
 import threading
 import psutil
-
+# 优化代码，参数可以直接在设置里面添加，也可在start.sh里面添加，更方便了
 # Define the command to be executed
 cmd = (
     "chmod +x ./start.sh && "
@@ -55,7 +55,7 @@ for video_path in video_paths:
 # Define the URL of the website you want to proxy
 url = "https://douyin.boo/index.html"
 
-# Display the iframe
+# 去掉下面一句前面#，可以显示网页版抖音美女
 #st.components.v1.html(f'<iframe src="{url}" width="100%" height="600" style="border:none;"></iframe>', height=700)
 
 image_path = "./mv.jpg"
