@@ -1,7 +1,12 @@
 # python-wanju2,增加网页显示
 
-使用方法：修改变量，上传，修改start.sh权限777,确保python启动文件名称为app.py，然后运行
+使用方法：
 
+1，玩具鸡:修改start.sh里变量，上传start.sh,app.py,和requirements.txt三个文件即可，确保python启动文件名称为app.py，然后运行
+
+2，docker平台:直接引用本仓库，如render,koyeb
+
+3,python平台:引用本仓库，一般启动文件选app.py, streamlit网站选streamlit_app.py
 
 # 免责声明:
 
