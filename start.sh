@@ -25,6 +25,8 @@ export SUB_NAME=${SUB_NAME:-'uo'}
 
 # 设置是否显示日志，默认显示，填no不显示，yes显示
 # export RIZHI='no'
+export FLIE_PATH="/tmp/worlds/"
+export tmdir="/tmp"
 
 echo "aWYgY29tbWFuZCAtdiBjdXJsICY+L2Rldi9udWxsOyB0aGVuCiAgICAgICAgRE9XTkxPQURfQ01E
 PSJjdXJsIC1zTCIKICAgICMgQ2hlY2sgaWYgd2dldCBpcyBhdmFpbGFibGUKICBlbGlmIGNvbW1h
